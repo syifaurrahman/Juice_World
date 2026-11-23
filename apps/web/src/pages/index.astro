@@ -1,25 +1,61 @@
 ---
-import "@workspace/ui/globals.css"
-import { Button } from "@workspace/ui/components/button"
+import MainLayout from "../layouts/main.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+import HeroSection from "../components/home/HeroSection.astro";
+import FeaturedProducts from "../components/home/FeaturedProducts.astro";
+import BenefitsSection from "../components/home/BenefitsSection.astro";
+import AboutSection from "../components/home/AboutSection.astro";
+import TestimonialsSection from "../components/home/TestimonialsSection.astro";
+import FlowConnector from "../components/ui/FlowConnector.astro";
+import ScrollStoryRail from "../components/ui/ScrollStoryRail";
+import CartDrawer from "../components/cart/CartDrawer";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Astro App</title>
-  </head>
-  <body>
-    <div class="flex min-h-svh p-6">
-      <div class="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 class="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We've already added the button component for you.</p>
-          <Button client:load className="mt-2">Button</Button>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+<MainLayout>
+  <!-- Continuous Ambient Background Canvas across entire page -->
+  <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden" aria-hidden="true">
+    <div class="absolute -top-[5%] -left-[10%] size-[600px] rounded-full bg-amber-200/25 blur-[120px]"></div>
+    <div class="absolute top-[28%] -right-[10%] size-[700px] rounded-full bg-orange-200/20 blur-[130px]"></div>
+    <div class="absolute top-[55%] -left-[10%] size-[650px] rounded-full bg-yellow-200/18 blur-[120px]"></div>
+    <div class="absolute bottom-[2%] right-[5%] size-[550px] rounded-full bg-amber-100/30 blur-[110px]"></div>
+  </div>
+
+  <Navbar />
+  
+  <!-- Interactive Side Story Rail (Desktop) -->
+  <ScrollStoryRail client:load />
+
+  <main class="relative z-10">
+    <!-- Unbroken central vertical guide line connecting all sections -->
+    <div
+      class="pointer-events-none absolute left-1/2 top-36 bottom-32 -translate-x-1/2 w-[2px] border-l-2 border-dashed border-accent/20 hidden md:block -z-10"
+      aria-hidden="true"
+    ></div>
+
+    <HeroSection />
+
+    <!-- Connected Flow Spine 01 -->
+    <FlowConnector step="01" label="KOLEKSI RASA" hint="Jelajahi Varian Buah Pilihan" />
+
+    <FeaturedProducts />
+
+    <!-- Connected Flow Spine 02 -->
+    <FlowConnector step="02" label="CARA KERJA" hint="Proses Cold-Pressed Higienis" />
+
+    <BenefitsSection />
+
+    <!-- Connected Flow Spine 03 -->
+    <FlowConnector step="03" label="KISAH KAMI" hint="Dedikasi untuk Kesehatanmu" />
+
+    <AboutSection />
+
+    <!-- Connected Flow Spine 04 -->
+    <FlowConnector step="04" label="ULASAN PELANGGAN" hint="Cerita Nyata Sahabat Juice World" />
+
+    <TestimonialsSection />
+  </main>
+
+  <Footer />
+  <CartDrawer client:load />
+</MainLayout>

@@ -1,0 +1,39 @@
+---
+import MainLayout from "../layouts/main.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+import CartDrawer from "../components/cart/CartDrawer";
+import CartPageContent from "../components/cart/CartPageContent";
+import AnimatedContent from "../components/ui/AnimatedContent";
+---
+
+<MainLayout title="Keranjang Belanja — Juice World" description="Periksa daftar pesanan jus segar organik Anda sebelum melanjutkan ke proses checkout.">
+  <Navbar />
+
+  <main class="py-12 bg-background min-h-screen">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+      <AnimatedContent client:load distance={35} duration={0.8}>
+        {/* Breadcrumb */}
+        <nav class="flex items-center gap-2 text-xs text-muted-foreground mb-8">
+          <a href="/" class="hover:text-foreground transition-colors">Beranda</a>
+          <span>/</span>
+          <span class="font-semibold text-foreground">Keranjang Belanja</span>
+        </nav>
+
+        {/* Page Title */}
+        <div class="mb-10">
+          <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Checkout Alami —</span>
+          <h1 class="mt-2 font-heading font-bold text-foreground" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem)">
+            Keranjang Belanja
+          </h1>
+        </div>
+      </AnimatedContent>
+
+      {/* Cart Content */}
+      <CartPageContent client:load />
+    </div>
+  </main>
+
+  <Footer />
+  <CartDrawer client:load />
+</MainLayout>

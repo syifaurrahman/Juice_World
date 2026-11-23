@@ -1,0 +1,96 @@
+---
+import AnimatedContent from "../ui/AnimatedContent";
+
+const testimonials = [
+  {
+    name: "Sari Wulandari",
+    role: "Atlet Lari",
+    avatar: "SW",
+    content:
+      "Sejak rutin minum Green Detox setiap pagi, energi saya meningkat drastis. Rasanya segar dan tidak terlalu manis!",
+    rating: 5,
+    product: "Green Detox",
+  },
+  {
+    name: "Budi Santoso",
+    role: "Pekerja Kantoran",
+    avatar: "BS",
+    content:
+      "Orange Blast jadi teman setia saya di kantor. Praktis dan menyegarkan — tahu bahwa minumannya benar-benar alami.",
+    rating: 5,
+    product: "Orange Blast",
+  },
+  {
+    name: "Dewi Rahayu",
+    role: "Ibu Rumah Tangga",
+    avatar: "DR",
+    content:
+      "Berry Bliss favorit anak-anak saya. Senang bisa memberikan minuman sehat yang juga enak dan bergizi!",
+    rating: 5,
+    product: "Berry Bliss",
+  },
+];
+---
+
+<section id="ulasan" class="py-24 bg-background">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10">
+    <!-- Two-column header layout with AnimatedContent -->
+    <AnimatedContent
+      client:visible
+      distance={35}
+      duration={0.8}
+      className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-16"
+    >
+      <div>
+        <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Ulasan Pelanggan —</span>
+        <h2 class="mt-3 font-heading font-bold text-foreground" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem)">
+          Yang Mereka<br/>Rasakan
+        </h2>
+      </div>
+      <div class="flex flex-col justify-end gap-3 lg:pt-10">
+        <p class="text-sm text-muted-foreground leading-relaxed">
+          Ribuan pelanggan telah merasakan manfaat nyata dari produk Juice World setiap harinya.
+        </p>
+        <a href="/reviews" class="w-fit text-xs font-semibold uppercase tracking-widest text-foreground underline underline-offset-4 hover:text-accent transition-colors">
+          Lihat Semua Ulasan →
+        </a>
+      </div>
+    </AnimatedContent>
+
+    <!-- Cards with Staggered AnimatedContent -->
+    <AnimatedContent
+      client:visible
+      distance={45}
+      stagger={0.15}
+      duration={0.8}
+      className="grid grid-cols-1 gap-5 md:grid-cols-3"
+    >
+      {testimonials.map(({ name, role, avatar, content, rating, product }) => (
+        <div class="flex flex-col gap-5 rounded-3xl bg-secondary/60 p-7 transition-transform duration-300 hover:-translate-y-1">
+          <!-- Stars -->
+          <div class="flex gap-0.5 text-accent text-sm">
+            {"★".repeat(rating)}
+          </div>
+          <!-- Quote -->
+          <p class="text-sm text-foreground leading-relaxed flex-1">
+            "{content}"
+          </p>
+          <!-- Product tag -->
+          <div class="inline-flex w-fit rounded-full bg-background px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground border border-border">
+            {product}
+          </div>
+          <!-- Author -->
+          <div class="flex items-center gap-3">
+            <div class="flex size-9 shrink-0 items-center justify-center rounded-full bg-foreground text-xs font-bold text-background">
+              {avatar}
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-foreground leading-none mb-0.5">{name}</p>
+              <p class="text-xs text-muted-foreground">{role}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </AnimatedContent>
+  </div>
+</section>

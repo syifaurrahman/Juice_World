@@ -1,0 +1,73 @@
+---
+import MainLayout from "../../layouts/main.astro";
+import Navbar from "../../components/layout/Navbar.astro";
+import Footer from "../../components/layout/Footer.astro";
+import CartDrawer from "../../components/cart/CartDrawer";
+import ProductCatalog from "../../components/products/ProductCatalog";
+import AnimatedContent from "../../components/ui/AnimatedContent";
+---
+
+<MainLayout title="Katalog Jus Organik — Juice World" description="Jelajahi seluruh varian jus cold-pressed, smoothie, dan ramuan herbal organik segar dari Juice World. Dibuat murni dari buah dan sayur segar pilihan.">
+  <Navbar />
+  
+  <main class="py-12 bg-background min-h-screen">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+      <AnimatedContent client:load distance={35} duration={0.8}>
+        {/* Breadcrumb */}
+        <nav class="flex items-center gap-2 text-xs text-muted-foreground mb-8">
+          <a href="/" class="hover:text-foreground transition-colors">Beranda</a>
+          <span>/</span>
+          <span class="font-semibold text-foreground">Katalog Produk</span>
+        </nav>
+
+        {/* Page Header */}
+        <div class="mb-12 flex flex-col gap-3">
+          <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Koleksi Lengkap —</span>
+          <h1 class="font-heading font-bold text-foreground" style="font-size: clamp(2.2rem, 4.5vw, 3.5rem)">
+            Katalog Jus Segar
+          </h1>
+          <p class="max-w-xl text-sm text-muted-foreground leading-relaxed">
+            Semua varian diekstrak langsung secara higienis menggunakan teknologi cold-press, tanpa tambahan air, gula sintetis, atau pengawet kimia.
+          </p>
+        </div>
+      </AnimatedContent>
+
+      {/* Catalog Component */}
+      <ProductCatalog client:load />
+
+      {/* Reassurance Banner with AnimatedContent */}
+      <AnimatedContent client:visible distance={40} duration={0.8} className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 rounded-3xl bg-secondary/50 p-8 border border-border/50">
+        <div class="flex items-center gap-4">
+          <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground text-background text-xl">
+            ❄️
+          </div>
+          <div>
+            <h4 class="font-heading text-base font-semibold text-foreground">Cold-Chain Delivery</h4>
+            <p class="text-xs text-muted-foreground mt-0.5">Selalu dikirim dalam kondisi dingin terjaga.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground text-background text-xl">
+            🌿
+          </div>
+          <div>
+            <h4 class="font-heading text-base font-semibold text-foreground">100% Buah Organik</h4>
+            <p class="text-xs text-muted-foreground mt-0.5">Bahan baku dari kebun lokal mitra.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground text-background text-xl">
+            ⚡
+          </div>
+          <div>
+            <h4 class="font-heading text-base font-semibold text-foreground">Pengiriman Cepat</h4>
+            <p class="text-xs text-muted-foreground mt-0.5">Tersedia Instant & Same-Day delivery.</p>
+          </div>
+        </div>
+      </AnimatedContent>
+    </div>
+  </main>
+
+  <Footer />
+  <CartDrawer client:load />
+</MainLayout>

@@ -1,0 +1,44 @@
+---
+import MainLayout from "../layouts/main.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+import CartDrawer from "../components/cart/CartDrawer";
+import FAQAccordion from "../components/faq/FAQAccordion";
+import AnimatedContent from "../components/ui/AnimatedContent";
+---
+
+<MainLayout title="Tanya Jawab (FAQ) — Juice World" description="Temukan jawaban lengkap seputar manfaat jus cold-pressed, daya tahan, cara penyimpanan, dan ketentuan pengiriman di Juice World.">
+  <Navbar />
+
+  <main class="py-12 bg-background min-h-screen">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+      <AnimatedContent client:load distance={40} duration={0.8}>
+        {/* Breadcrumb */}
+        <nav class="flex items-center gap-2 text-xs text-muted-foreground mb-8">
+          <a href="/" class="hover:text-foreground transition-colors">Beranda</a>
+          <span>/</span>
+          <span class="font-semibold text-foreground">FAQ</span>
+        </nav>
+
+        {/* Header */}
+        <div class="mb-12">
+          <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Pusat Informasi —</span>
+          <h1 class="mt-2 font-heading font-bold text-foreground" style="font-size: clamp(2.2rem, 4.5vw, 3.5rem)">
+            Pertanyaan yang Sering Diajukan
+          </h1>
+          <p class="max-w-xl text-sm text-muted-foreground leading-relaxed mt-2">
+            Semua hal yang perlu Anda ketahui mengenai kualitas bahan baku, proses ekstraksi dingin, hingga keamanan pengiriman pesanan Anda.
+          </p>
+        </div>
+      </AnimatedContent>
+
+      {/* Accordion Component */}
+      <AnimatedContent client:load distance={50} delay={0.2} duration={0.8}>
+        <FAQAccordion client:load />
+      </AnimatedContent>
+    </div>
+  </main>
+
+  <Footer />
+  <CartDrawer client:load />
+</MainLayout>

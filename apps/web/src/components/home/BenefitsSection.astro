@@ -1,0 +1,139 @@
+---
+import AnimatedContent from "../ui/AnimatedContent";
+
+const steps = [
+  {
+    num: "01",
+    title: "Pilih Jus",
+    desc: "Pilih dari berbagai varian jus organik premium kami.",
+  },
+  {
+    num: "02",
+    title: "Tentukan Jadwal",
+    desc: "Atur hari pengiriman yang paling nyaman untukmu.",
+  },
+  {
+    num: "03",
+    title: "Diterima Segar",
+    desc: "Jus diantar langsung ke pintu rumahmu dalam kondisi dingin dan segar.",
+  },
+];
+---
+
+<section id="cara-kerja" class="py-24 relative">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+      <!-- Left: Steps (col-span 5) with AnimatedContent -->
+      <AnimatedContent
+        client:visible
+        distance={40}
+        duration={0.8}
+        className="lg:col-span-5 flex flex-col gap-6 z-10"
+      >
+        <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Cara Kerja —</span>
+        <h2 class="font-heading font-bold text-foreground" style="font-size: clamp(1.8rem, 3.5vw, 2.6rem)">
+          Semudah 3 Langkah
+        </h2>
+        <div class="flex flex-col gap-6 mt-4">
+          {steps.map((step, i) => (
+            <div class="flex items-start gap-5 group">
+              <div class="flex shrink-0 flex-col items-center">
+                <!-- Clean vector icon container -->
+                <div class="flex size-12 items-center justify-center rounded-full bg-foreground text-accent shadow-md transition-transform duration-300 group-hover:scale-110">
+                  {i === 0 && (
+                    <svg class="size-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/>
+                      <path d="M5 8h14"/>
+                      <path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/>
+                      <path d="m12 8 1-6h2"/>
+                    </svg>
+                  )}
+                  {i === 1 && (
+                    <svg class="size-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M8 2v4"/>
+                      <path d="M16 2v4"/>
+                      <path d="M21 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3.5"/>
+                      <path d="M3 10h18"/>
+                      <path d="m9 16 2 2 4-4"/>
+                    </svg>
+                  )}
+                  {i === 2 && (
+                    <svg class="size-5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                      <path d="M15 18H9"/>
+                      <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                      <circle cx="17" cy="18.5" r="2.5"/>
+                      <circle cx="7" cy="18.5" r="2.5"/>
+                    </svg>
+                  )}
+                </div>
+                {i < steps.length - 1 && (
+                  <div class="mt-2 w-px h-10 bg-border"></div>
+                )}
+              </div>
+              <div class="flex flex-col gap-1 pt-2">
+                <span class="text-[10px] font-bold tracking-widest text-muted-foreground">{step.num}</span>
+                <h3 class="font-heading text-lg font-semibold text-foreground group-hover:text-accent transition-colors">{step.title}</h3>
+                <p class="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="mt-2">
+          <a
+            href="/products"
+            class="inline-flex h-11 items-center gap-2 rounded-full bg-foreground px-7 text-xs font-semibold tracking-widest text-background uppercase hover:bg-foreground/85 transition-all"
+          >
+            Mulai Sekarang
+          </a>
+        </div>
+      </AnimatedContent>
+
+      <!-- Right: Tangan Memegang Cup Jus with smooth horizontal slide & continuous gentle breathing motion -->
+      <AnimatedContent
+        client:visible
+        distance={60}
+        direction="horizontal"
+        duration={0.9}
+        className="lg:col-span-7 relative flex items-center justify-end -mr-6 sm:-mr-10 lg:-mr-[calc(max(0px,(100vw-80rem)/2)+2.5rem)] select-none"
+      >
+        <!-- Hand with juice cup image container - Clean presentation without gray shadow -->
+        <div class="relative z-10 w-full flex justify-end overflow-visible">
+          <div class="animate-float-hand flex justify-end will-change-transform">
+            <img
+              src="/images/benefits-hand-juice.webp"
+              alt="Tangan memegang botol jus Watermelon Chill segar dingin siap dinikmati"
+              class="h-[380px] sm:h-[460px] lg:h-[520px] xl:h-[560px] w-auto max-w-none object-contain object-right transition-transform duration-500 hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </AnimatedContent>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes floatHand {
+    0% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(-1.2deg);
+    }
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+  }
+
+  .animate-float-hand {
+    transform-origin: 92% 55%;
+    animation: floatHand 5.5s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float-hand {
+      animation: none;
+    }
+  }
+</style>

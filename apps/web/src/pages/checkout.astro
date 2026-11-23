@@ -1,0 +1,39 @@
+---
+import MainLayout from "../layouts/main.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+import CheckoutForm from "../components/checkout/CheckoutForm";
+import AnimatedContent from "../components/ui/AnimatedContent";
+---
+
+<MainLayout title="Checkout Pesanan — Juice World" description="Selesaikan pembayaran pesanan jus segar Anda dengan pengiriman dingin langsung ke alamat Anda.">
+  <Navbar />
+
+  <main class="py-12 bg-background min-h-screen">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+      <AnimatedContent client:load distance={35} duration={0.8}>
+        {/* Breadcrumb */}
+        <nav class="flex items-center gap-2 text-xs text-muted-foreground mb-8">
+          <a href="/" class="hover:text-foreground transition-colors">Beranda</a>
+          <span>/</span>
+          <a href="/cart" class="hover:text-foreground transition-colors">Keranjang</a>
+          <span>/</span>
+          <span class="font-semibold text-foreground">Checkout</span>
+        </nav>
+
+        {/* Header */}
+        <div class="mb-10">
+          <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Selesaikan Pesanan —</span>
+          <h1 class="mt-2 font-heading font-bold text-foreground" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem)">
+            Pengiriman & Pembayaran
+          </h1>
+        </div>
+      </AnimatedContent>
+
+      {/* Checkout Form Component */}
+      <CheckoutForm client:load />
+    </div>
+  </main>
+
+  <Footer />
+</MainLayout>

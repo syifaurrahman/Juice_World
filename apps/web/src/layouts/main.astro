@@ -1,15 +1,28 @@
 ---
 import "@workspace/ui/globals.css"
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Juice World — Jus Segar Premium",
+  description = "Nikmati jus cold-pressed, smoothie, dan minuman sehat premium dari Juice World. Dibuat segar setiap hari dari buah dan sayuran pilihan.",
+} = Astro.props;
 ---
 
-<html lang="en">
+<html lang="id" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Astro App</title>
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <ClientRouter />
   </head>
-  <body>
+  <body class="min-h-screen bg-background text-foreground antialiased selection:bg-accent/20 selection:text-foreground">
     <slot />
   </body>
 </html>

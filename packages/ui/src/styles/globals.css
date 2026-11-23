@@ -5,43 +5,48 @@
 @import "@fontsource-variable/playfair-display";
 
 @custom-variant dark (&:is(.dark *));
-@source "../../../apps/**/*.{ts,tsx,astro}";
-@source "../../../components/**/*.{ts,tsx}";
+@source "../../../../apps/**/*.{ts,tsx,astro}";
 @source "../**/*.{ts,tsx}";
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.147 0.004 49.3);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.147 0.004 49.3);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.147 0.004 49.3);
-    --primary: oklch(0.214 0.009 43.1);
-    --primary-foreground: oklch(0.986 0.002 67.8);
-    --secondary: oklch(0.96 0.002 17.2);
-    --secondary-foreground: oklch(0.214 0.009 43.1);
-    --muted: oklch(0.96 0.002 17.2);
-    --muted-foreground: oklch(0.547 0.021 43.1);
-    --accent: oklch(0.96 0.002 17.2);
-    --accent-foreground: oklch(0.214 0.009 43.1);
+    /* ── Juice World Brand Colors (Minimalist Organic) ───── */
+    --background: oklch(0.98 0.018 80);        /* warm cream #FAF5EC */
+    --foreground: oklch(0.18 0.015 50);        /* deep brown #1C1208 */
+    --card: oklch(0.96 0.022 78);              /* soft cream card */
+    --card-foreground: oklch(0.18 0.015 50);
+    --popover: oklch(0.98 0.018 80);
+    --popover-foreground: oklch(0.18 0.015 50);
+    --primary: oklch(0.18 0.015 50);           /* dark brown — CTA buttons */
+    --primary-foreground: oklch(0.98 0.018 80);
+    --secondary: oklch(0.94 0.030 72);         /* warm peach #F5E6C8 */
+    --secondary-foreground: oklch(0.18 0.015 50);
+    --muted: oklch(0.94 0.030 72);
+    --muted-foreground: oklch(0.45 0.025 55);
+    --accent: oklch(0.68 0.19 44);             /* fresh orange #F97316 */
+    --accent-foreground: oklch(0.98 0.018 80);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0.005 34.3);
-    --input: oklch(0.922 0.005 34.3);
-    --ring: oklch(0.714 0.014 41.2);
-    --chart-1: oklch(0.868 0.007 39.5);
-    --chart-2: oklch(0.547 0.021 43.1);
-    --chart-3: oklch(0.438 0.017 39.3);
-    --chart-4: oklch(0.367 0.016 35.7);
-    --chart-5: oklch(0.268 0.011 36.5);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.986 0.002 67.8);
-    --sidebar-foreground: oklch(0.147 0.004 49.3);
-    --sidebar-primary: oklch(0.214 0.009 43.1);
-    --sidebar-primary-foreground: oklch(0.986 0.002 67.8);
-    --sidebar-accent: oklch(0.96 0.002 17.2);
-    --sidebar-accent-foreground: oklch(0.214 0.009 43.1);
-    --sidebar-border: oklch(0.922 0.005 34.3);
-    --sidebar-ring: oklch(0.714 0.014 41.2);
+    --border: oklch(0.88 0.030 72);
+    --input: oklch(0.88 0.030 72);
+    --ring: oklch(0.47 0.18 38);
+    --chart-1: oklch(0.68 0.19 44);
+    --chart-2: oklch(0.47 0.18 38);
+    --chart-3: oklch(0.35 0.10 155);
+    --chart-4: oklch(0.65 0.16 150);
+    --chart-5: oklch(0.55 0.08 70);
+    --radius: 999px;                           /* pill-shaped buttons */
+    --sidebar: oklch(0.98 0.018 80);
+    --sidebar-foreground: oklch(0.18 0.015 50);
+    --sidebar-primary: oklch(0.18 0.015 50);
+    --sidebar-primary-foreground: oklch(0.98 0.018 80);
+    --sidebar-accent: oklch(0.94 0.030 72);
+    --sidebar-accent-foreground: oklch(0.18 0.015 50);
+    --sidebar-border: oklch(0.88 0.030 72);
+    --sidebar-ring: oklch(0.47 0.18 38);
+    /* ── Custom Brand Tokens ──────────────────────────────── */
+    --brand-green: oklch(0.35 0.10 155);       /* #2F6B3B leaf green */
+    --brand-orange: oklch(0.68 0.19 44);       /* #F97316 fresh orange */
+    --brand-cream: oklch(0.98 0.018 80);       /* warm cream background */
+    --brand-brown: oklch(0.18 0.015 50);       /* deep brown */
 }
 
 .dark {

@@ -1,0 +1,301 @@
+---
+import CartIconButton from "../cart/CartIconButton";
+
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: "/", label: "Home", sectionId: "hero" },
+  { href: "/products", label: "Produk", sectionId: "flavors" },
+  { href: "/reviews", label: "Ulasan", sectionId: "ulasan" },
+  { href: "/contact", label: "Kontak", sectionId: "kontak" },
+];
+---
+
+<header transition:persist id="main-header" class="sticky top-0 z-50 w-full bg-background/90 backdrop-blur-md border-b border-border/40">
+  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
+    <!-- Logo -->
+    <a href="/" class="font-heading text-2xl font-bold tracking-tight text-foreground transition-transform hover:scale-105">
+      Juicy
+    </a>
+
+    <!-- Desktop Nav with animated sliding underline & scroll spy -->
+    <nav id="desktop-nav" class="relative hidden md:flex items-center gap-8 py-2">
+      {navLinks.map(({ href, label, sectionId }) => {
+        const isActive = href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+        return (
+          <a
+            href={href}
+            data-nav-link
+            data-href={href}
+            data-section-id={sectionId}
+            class={`relative py-1 text-xs font-medium uppercase tracking-widest transition-colors duration-200 focus:outline-none ${
+              isActive
+                ? "text-foreground font-semibold"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {label}
+          </a>
+        );
+      })}
+
+      <!-- Sliding active underline indicator bar -->
+      <div
+        id="nav-sliding-indicator"
+        class="absolute bottom-0 h-[2.5px] bg-accent rounded-full pointer-events-none opacity-0 shadow-sm transition-all duration-300 ease-out"
+        style="left: 0; width: 0;"
+      ></div>
+    </nav>
+
+    <!-- Right: Cart + CTA + Mobile Toggle -->
+    <div class="flex items-center gap-3">
+      <CartIconButton client:load />
+      <a
+        href="/products"
+        class="hidden md:inline-flex h-9 items-center rounded-full bg-foreground px-5 text-xs font-semibold tracking-widest text-background uppercase transition-all hover:bg-foreground/80 hover:shadow-sm active:scale-95"
+      >
+        Pesan Sekarang
+      </a>
+      <!-- Mobile hamburger toggle -->
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        class="inline-flex md:hidden size-9 items-center justify-center rounded-md border border-border text-foreground transition-colors hover:bg-muted"
+        aria-label="Buka menu navigasi"
+      >
+        <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border/50 bg-background/95 px-6 py-4 backdrop-blur-md">
+    <nav class="flex flex-col gap-3.5">
+      {navLinks.map(({ href, label, sectionId }) => {
+        const isActive = href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+        return (
+          <a
+            href={href}
+            data-mobile-link
+            data-section-id={sectionId}
+            class={`text-xs font-medium tracking-wider uppercase transition-colors flex items-center justify-between ${
+              isActive ? "text-accent font-semibold" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <span>{label}</span>
+            {isActive && <span class="size-1.5 rounded-full bg-accent"></span>}
+          </a>
+        );
+      })}
+      <a
+        href="/products"
+        class="mt-2 inline-flex h-9 items-center justify-center rounded-full bg-foreground px-5 text-xs font-semibold tracking-widest text-background uppercase"
+      >
+        Pesan Sekarang
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function setupNavbar() {
+    const nav = document.getElementById("desktop-nav");
+    const indicator = document.getElementById("nav-sliding-indicator");
+    if (!nav || !indicator) return;
+
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"));
+    const rawPath = window.location.pathname.replace(/\/$/, "") || "/";
+    const isHomePage = rawPath === "/";
+
+    // Section mapping for Scroll Spy on Homepage
+    const scrollSections: { id: string; href: string }[] = [
+      { id: "hero", href: "/" },
+      { id: "flavors", href: "/products" },
+      { id: "cara-kerja", href: "/products" },
+      { id: "kisah-kami", href: "/reviews" },
+      { id: "ulasan", href: "/reviews" },
+      { id: "newsletter", href: "/contact" },
+      { id: "kontak", href: "/contact" },
+    ];
+
+    let currentActiveTarget: HTMLElement | null = null;
+    let isHovering = false;
+
+    function moveIndicator(target: HTMLElement | null, instant = false) {
+      if (!target || !indicator || !nav) return;
+      const navRect = nav.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      const left = targetRect.left - navRect.left;
+      const width = targetRect.width;
+
+      if (instant) {
+        indicator.style.transition = "none";
+        indicator.style.left = `${left}px`;
+        indicator.style.width = `${width}px`;
+        indicator.style.opacity = "1";
+        indicator.offsetHeight; // force reflow
+        indicator.style.transition = "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)";
+      } else {
+        indicator.style.transition = "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)";
+        indicator.style.left = `${left}px`;
+        indicator.style.width = `${width}px`;
+        indicator.style.opacity = "1";
+      }
+
+      links.forEach((l) => {
+        if (l === target) {
+          l.classList.add("text-foreground", "font-semibold");
+          l.classList.remove("text-muted-foreground");
+        } else {
+          l.classList.remove("text-foreground", "font-semibold");
+          l.classList.add("text-muted-foreground");
+        }
+      });
+    }
+
+    function getSectionAtScroll(): string {
+      const scrollY = window.scrollY;
+      const windowH = window.innerHeight;
+      const docH = document.documentElement.scrollHeight;
+
+      // If near the top
+      if (scrollY < 100) return "/";
+
+      // If near the bottom of the page
+      if (scrollY + windowH >= docH - 80) return "/contact";
+
+      // Target anchor point at 38% of viewport height
+      const targetPoint = windowH * 0.38;
+
+      // 1. Check if section bounds currently contain the targetPoint
+      for (let i = 0; i < scrollSections.length; i++) {
+        const el = document.getElementById(scrollSections[i].id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= targetPoint && rect.bottom >= targetPoint) {
+            return scrollSections[i].href;
+          }
+        }
+      }
+
+      // 2. Fallback: find the last section whose top has scrolled past targetPoint
+      for (let i = scrollSections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(scrollSections[i].id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= targetPoint) {
+            return scrollSections[i].href;
+          }
+        }
+      }
+
+      return "/";
+    }
+
+    function updateActiveLink(instant = false) {
+      if (isHovering) return;
+
+      let targetHref = rawPath;
+      if (isHomePage) {
+        targetHref = getSectionAtScroll();
+      }
+
+      const matchedLink = links.find((l) => {
+        const h = l.getAttribute("data-href");
+        return h === targetHref;
+      }) || links[0];
+
+      if (matchedLink !== currentActiveTarget) {
+        currentActiveTarget = matchedLink;
+        moveIndicator(matchedLink, instant);
+      }
+    }
+
+    // Set initial position
+    updateActiveLink(true);
+
+    // Scroll Spy: track scroll position on the homepage
+    if (isHomePage) {
+      let ticking = false;
+      const handleScroll = () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            updateActiveLink(false);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    }
+
+    // Hover & Click interactions
+    links.forEach((link) => {
+      link.onmouseenter = () => {
+        isHovering = true;
+        moveIndicator(link, false);
+      };
+
+      link.onclick = (e) => {
+        if (isHomePage) {
+          const secId = link.getAttribute("data-section-id");
+          if (secId) {
+            const secEl = document.getElementById(secId);
+            if (secEl) {
+              e.preventDefault();
+              secEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              currentActiveTarget = link;
+              moveIndicator(link, false);
+            }
+          }
+        }
+      };
+    });
+
+    nav.onmouseleave = () => {
+      isHovering = false;
+      currentActiveTarget = null;
+      updateActiveLink(false);
+    };
+  }
+
+  function setupMobileMenu() {
+    const toggle = document.getElementById("mobile-menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+    if (toggle && menu) {
+      toggle.onclick = () => {
+        menu.classList.toggle("hidden");
+      };
+      menu.querySelectorAll("[data-mobile-link]").forEach((el) => {
+        const link = el as HTMLAnchorElement;
+        link.onclick = (e) => {
+          menu.classList.add("hidden");
+          if (window.location.pathname === "/" || window.location.pathname === "") {
+            const secId = link.getAttribute("data-section-id");
+            if (secId) {
+              const secEl = document.getElementById(secId);
+              if (secEl) {
+                e.preventDefault();
+                secEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }
+          }
+        };
+      });
+    }
+  }
+
+  function init() {
+    setupNavbar();
+    setupMobileMenu();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+  document.addEventListener("astro:page-load", init);
+</script>

@@ -1,0 +1,22 @@
+---
+import AnimatedContent from "../ui/AnimatedContent";
+import FeaturedProductsExpanded from "./FeaturedProductsExpanded";
+---
+
+<section id="flavors" class="py-24 bg-background">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10">
+    <!-- Section header -->
+    <AnimatedContent client:visible distance={35} duration={0.8} className="mb-14 flex flex-col items-center gap-3 text-center">
+      <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Koleksi Rasa —</span>
+      <h2 class="font-heading font-bold text-foreground" style="font-size: clamp(2rem, 4vw, 3rem)">
+        Pilih Rasa Favoritmu
+      </h2>
+      <p class="mt-1 max-w-sm text-sm text-muted-foreground leading-relaxed">
+        Setiap botol adalah perpaduan nutrisi alami murni tanpa pemanis dan pengawet buatan.
+      </p>
+    </AnimatedContent>
+
+    <!-- Interactive product grid with inline expand -->
+    <FeaturedProductsExpanded client:load />
+  </div>
+</section>

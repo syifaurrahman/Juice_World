@@ -1,0 +1,194 @@
+---
+import MainLayout from "../../layouts/main.astro";
+import Navbar from "../../components/layout/Navbar.astro";
+import Footer from "../../components/layout/Footer.astro";
+import CartDrawer from "../../components/cart/CartDrawer";
+import ProductDetailsAction from "../../components/products/ProductDetailsAction";
+import ProductCard from "../../components/products/ProductCard";
+import AnimatedContent from "../../components/ui/AnimatedContent";
+import { products, formatPrice, type Product } from "../../data/products";
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+// Related products in the same category or other featured
+const relatedProducts = products
+  .filter((p) => p.id !== product.id)
+  .slice(0, 4);
+
+const flavorTones: Record<string, { bg: string; circle: string }> = {
+  "orange-blast": { bg: "bg-amber-100/40", circle: "bg-amber-200/60" },
+  "green-detox": { bg: "bg-emerald-100/40", circle: "bg-emerald-200/60" },
+  "berry-bliss": { bg: "bg-purple-100/40", circle: "bg-purple-200/60" },
+  "mango-sunrise": { bg: "bg-yellow-100/40", circle: "bg-yellow-200/60" },
+  "watermelon-chill": { bg: "bg-rose-100/40", circle: "bg-rose-200/60" },
+  "carrot-glow": { bg: "bg-orange-100/40", circle: "bg-orange-200/60" },
+  "tropical-paradise": { bg: "bg-lime-100/40", circle: "bg-lime-200/60" },
+  "immunity-shield": { bg: "bg-amber-100/50", circle: "bg-amber-300/50" },
+};
+
+const tone = flavorTones[product.slug] || { bg: "bg-secondary/60", circle: "bg-accent/20" };
+---
+
+<MainLayout title={`${product.name} — Juice World`} description={product.description}>
+  <Navbar />
+
+  <main class="py-12 bg-background min-h-screen">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+      <AnimatedContent client:load distance={35} duration={0.8}>
+        {/* Breadcrumbs */}
+        <nav class="flex items-center gap-2 text-xs text-muted-foreground mb-10">
+          <a href="/" class="hover:text-foreground transition-colors">Beranda</a>
+          <span>/</span>
+          <a href="/products" class="hover:text-foreground transition-colors">Katalog</a>
+          <span>/</span>
+          <span class="font-semibold text-foreground">{product.name}</span>
+        </nav>
+
+        {/* Main Details Grid */}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {/* Visual Column - Frameless & Enlarged */}
+          <div class="flex items-center justify-center sticky top-24">
+            <div class={`relative flex items-center justify-center w-full max-w-[540px] min-h-[460px] sm:min-h-[520px] rounded-[40px] ${tone.bg} p-8 border border-border/50`}>
+              {/* Frameless visual with border radius 15 */}
+              {product.image ? (
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  class="relative z-10 max-h-[420px] sm:max-h-[460px] w-auto max-w-full object-contain rounded-[15px] drop-shadow-lg transition-transform duration-500 hover:scale-[1.02]"
+                />
+              ) : (
+                <div class="relative z-10 size-72 sm:size-96 flex items-center justify-center" />
+              )}
+
+              {/* Badges */}
+              {product.badge && (
+                <span class="absolute top-6 left-6 z-20 rounded-full bg-foreground px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-background">
+                  {product.badge}
+                </span>
+              )}
+
+              <span class="absolute bottom-6 right-6 z-20 rounded-full bg-background/90 backdrop-blur-sm px-4 py-1.5 text-xs font-semibold text-foreground border border-border/60">
+                {product.volume}
+              </span>
+            </div>
+          </div>
+
+          {/* Content Column */}
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                <span class="size-1.5 rounded-full bg-[var(--brand-green)]"></span>
+                {product.category.replace("-", " ")}
+              </span>
+              <span class="text-xs text-muted-foreground">· 100% Organik Murni</span>
+            </div>
+
+            <h1 class="font-heading font-bold text-foreground" style="font-size: clamp(2.4rem, 4.5vw, 3.4rem)">
+              {product.name}
+            </h1>
+
+            <p class="font-serif text-lg italic text-muted-foreground leading-snug">
+              "{product.tagline}"
+            </p>
+
+            <p class="text-sm text-foreground/80 leading-relaxed">
+              {product.description}
+            </p>
+
+            {/* Ingredients */}
+            <div class="flex flex-col gap-2.5 pt-2">
+              <span class="text-xs font-semibold uppercase tracking-widest text-foreground">
+                Komposisi Bahan Alami:
+              </span>
+              <div class="flex flex-wrap gap-2">
+                {product.ingredients.map((ing) => (
+                  <span class="rounded-full border border-border/80 bg-secondary/50 px-3.5 py-1 text-xs font-medium text-foreground">
+                    ✦ {ing}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Tags */}
+            <div class="flex flex-wrap gap-2">
+              {product.tags.map((tag) => (
+                <span class="rounded-full bg-secondary px-3 py-1 text-[11px] font-medium text-muted-foreground capitalize">
+                  #{tag.replace(/-/g, " ")}
+                </span>
+              ))}
+            </div>
+
+            {/* Interactive Action: Quantity & Add to Cart */}
+            <ProductDetailsAction
+              product={product}
+              formattedPrice={formatPrice(product.price)}
+              client:load
+            />
+
+            {/* Guarantees */}
+            <div class="grid grid-cols-2 gap-4 pt-4 border-t border-border/40 text-xs text-muted-foreground">
+              <div class="flex items-center gap-2">
+                <span>❄️</span>
+                <span>Simpan di suhu 1–4°C</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span>⏱️</span>
+                <span>Konsumsi dalam 3–5 hari</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span>🚚</span>
+                <span>Pengiriman Instant & Same Day</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span>🍃</span>
+                <span>Tanpa gula & pengawet</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AnimatedContent>
+
+      {/* Related Products with AnimatedContent */}
+      <AnimatedContent client:visible distance={40} duration={0.8} className="mt-28 border-t border-border/50 pt-16">
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Eksplorasi Rasa Lain —</span>
+            <h3 class="mt-2 font-heading text-2xl font-bold text-foreground">
+              Varian yang Mungkin Anda Suka
+            </h3>
+          </div>
+          <a
+            href="/products"
+            class="text-xs font-semibold uppercase tracking-widest text-foreground underline underline-offset-4 hover:text-accent transition-colors"
+          >
+            Lihat Semua Produk →
+          </a>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 justify-items-center">
+          {relatedProducts.map((p) => (
+            <ProductCard
+              product={p}
+              formattedPrice={formatPrice(p.price)}
+              client:load
+            />
+          ))}
+        </div>
+      </AnimatedContent>
+    </div>
+  </main>
+
+  <Footer />
+  <CartDrawer client:load />
+</MainLayout>

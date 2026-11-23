@@ -27,3 +27,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# test and agent tool artifacts
+.playwright-mcp/
+

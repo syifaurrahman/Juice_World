@@ -1,0 +1,63 @@
+---
+import AnimatedContent from "../ui/AnimatedContent";
+
+const farmImg = "/images/about-orchard.jpg";
+---
+
+<section id="kisah-kami" class="py-24 bg-background">
+  <div class="mx-auto max-w-7xl px-6 lg:px-10">
+    <AnimatedContent client:visible distance={40} duration={0.85} className="overflow-hidden rounded-[36px] bg-secondary/50 border border-border/50">
+      <!-- Top banner image: Orchard -->
+      <div class="relative h-72 sm:h-96 w-full overflow-hidden">
+        <img
+          src={farmImg}
+          alt="Perkebunan jeruk organik Juice World"
+          class="size-full object-cover object-center"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+        <div class="absolute bottom-6 left-6 sm:bottom-8 sm:left-10">
+          <span class="inline-flex items-center gap-2 rounded-full bg-background/95 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-foreground shadow-sm backdrop-blur-sm">
+            <span class="size-1.5 rounded-full bg-[var(--brand-green)]"></span>
+            Dari Kebun Organik Terpilih
+          </span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="p-8 sm:p-12 lg:p-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-4">
+            <span class="text-xs font-semibold uppercase tracking-[0.25em] text-accent">— Filosofi Kami —</span>
+            <h2 class="mt-2 font-heading font-bold text-foreground" style="font-size: clamp(2rem, 3.5vw, 2.8rem)">
+              Siapa Kami?
+            </h2>
+          </div>
+
+          <div class="lg:col-span-8 flex flex-col gap-5">
+            <p class="text-base sm:text-lg text-foreground font-serif leading-relaxed italic">
+              "Kami percaya bahwa tubuh yang sehat berawal dari apa yang kita konsumsi secara sadar setiap hari."
+            </p>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Selama bertahun-tahun, Juice World berkomitmen menyajikan 100% jus murni dan segar tanpa kompromi. Kami bekerja sama langsung dengan petani lokal bersertifikasi organik, memetik buah saat kematangan optimal, dan mengekstraknya menggunakan teknik cold-press higienis agar setiap enzim, vitamin, dan mineral tetap hidup di dalam botol Anda.
+            </p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-4 border-t border-border/50">
+              <div>
+                <p class="font-heading text-xl font-bold text-foreground">10+ Tahun</p>
+                <p class="text-xs text-muted-foreground mt-0.5">Pengalaman Dedikasi</p>
+              </div>
+              <div>
+                <p class="font-heading text-xl font-bold text-foreground">100% Murni</p>
+                <p class="text-xs text-muted-foreground mt-0.5">Tanpa Konsentrat</p>
+              </div>
+              <div>
+                <p class="font-heading text-xl font-bold text-foreground">Lokal</p>
+                <p class="text-xs text-muted-foreground mt-0.5">Petani Mitra Indonesia</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </AnimatedContent>
+  </div>
+</section>
